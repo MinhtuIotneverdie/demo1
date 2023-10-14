@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Button Example</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    
+</head>
+<body>
+    <div class="container">
+        <!-- Đối tượng HTML để vẽ gauge -->
+    
+         
+        <div class="mode">
+            <form method="POST">
+                {% csrf_token %}
+                <h2>MODE</h2>
+                <button id="myButton" type="button" title="Click me">Manual</button>
+            </form>
+        </div>
+
+        <div class="pump">
+            <form>
+                {% csrf_token %}
+                <h2>PUMP</h2>
+                <button id="modepump" type="button" title="mode pump">OFF</button>
+            </form>
+        </div>
+
+        <div class = 'sliderContainer'>
+             <form method = 'POST' >
+                {% csrf_token %}
+                <h2>Maximum Humidity </h2>
+                <input type="range" class ='sliderone' id="slider1" name="slider1" min="0" max="100" value="0">
+                <span id="slider1Value" class="slider-value">0</span>
+             </form>
+        </div>
+
+        <div>
+            <form method = 'POST'>
+                {% csrf_token %}
+                <h2>Minimum Humidity </h2>
+                <input type='range' id='slider2' name='slider2' min='0' max = '100' value='0'>
+                <span id="slider2Value" class="slider2-value">0</span>
+            </form>
+        </div>
+
+        
+    </div>
+    <div id="humidityGauge"></div>
+        <div class="gauge">
+            <h2> Humidity</h2>
+            <div class="gauge-reading">0%</div>
+            
+        </div>
+
+    <style>
+        .gauge-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f3cece;
+        }
+        
+        /* CSS cho gauge */
+        .gauge {
+            width: 200px;
+            height: 200px;
+            position: relative;
+        }
+        
+        /* Kim đo độ ẩm */
+        .gauge-needle {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform-origin: 50% 100%;
+            transform: translateX(-50%) rotate(-90deg);
+            width: 2px;
+            height: 70px;
+            background-color: red;
+        }
+        
+        /* Đọc giá trị độ ẩm */
+        .gauge-reading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+       
+    </style>
+
+    <script src="{% static 'script/script.js' %}"></script>
+{% comment %}  
+    <script>
+        
+        var button = document.getElementById('myButton');
+        var originalText = 'Manual';
+        var newText = 'Auto';
+        var isClicked = false;
+
+        var button_pump = document.getElementById('modepump');
+        var originalText_pump = 'OFF';
+        var newText_pump = 'ON';
+        var isClicked_pump = false;
+
+        button.addEventListener('click', function(event) {
+            event.preventDefault();
+
+            if (isClicked) {
+                button.textContent = originalText;
+                button.title = originalText;
+                button.classList.remove('clicked');
+                isClicked = false;
+            } else {
+                button.textContent = newText;
+                button.title = newText;
+                button.classList.add('clicked');
+                isClicked = true;
+            }
+        });
+
+        button_pump.addEventListener('click', function(event) {
+            event.preventDefault();
+
+            if (isClicked_pump) {
+                button_pump.textContent = originalText_pump;
+                button_pump.title = originalText_pump;
+                button_pump.classList.remove('clicked');
+                isClicked_pump = false;
+            } else {
+                button_pump.textContent = newText_pump;
+                button_pump.title = newText_pump;
+                button_pump.classList.add('clicked');
+                isClicked_pump = true;
+            }
+        });
+
+         var slider1 = document.getElementById('slider1');
+         var slider1value =document.getElementById('slider1Value');
+         var slider2value =document.getElementById('slider2Value');
+         var slider2 = document.getElementById('slider2');  
+         slider1.addEventListener('input', function() {
+        // Update the value of slider1 in a hidden input field
+        document.getElementById('slider1Value').value = slider1.value;
+        slider1value.textContent = slider1.value;
+        });
+
+          slider2.addEventListener('input', function() {
+        // Update the value of slider2 in a hidden input field
+        document.getElementById('slider2Value').value = slider2.value;
+        slider2value.textContent = slider2.value;
+    });
+
+    
+    </script>{% endcomment %}
+</body>
+</html>
